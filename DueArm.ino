@@ -109,15 +109,36 @@ void procesaComando(char datoSerie) {
   if (datoSerie == '1') {
     mueveStepper(&baseStepper, baseStepper.targetPosition() + 600, brazoSpeed);
   } else if (datoSerie == '2') {
-    mueveStepper(&baseStepper, baseStepper.targetPosition() + -600, brazoSpeed);
+    mueveStepper(&baseStepper, baseStepper.targetPosition() - 600, brazoSpeed);
+  } else if (datoSerie == 'y') {
+    mueveStepper(&baseStepper, 14000, brazoSpeed);
+  } else if (datoSerie == 'u') {
+    mueveStepper(&baseStepper, -14000, brazoSpeed);
+  } else if (datoSerie == '3') {
+    baseStepper.stop();
+    baseStepper.disableOutputs();
   } else if (datoSerie == '4') {
     mueveStepper(&brazoStepper, brazoStepper.targetPosition() + 600, brazoSpeed);
   } else if (datoSerie == '5') {
-    mueveStepper(&brazoStepper, brazoStepper.targetPosition() + -600, brazoSpeed);
+    mueveStepper(&brazoStepper, brazoStepper.targetPosition() - 600, brazoSpeed);
+  } else if (datoSerie == 'h') {
+    mueveStepper(&brazoStepper, 14000, brazoSpeed);
+  } else if (datoSerie == 'j') {
+    mueveStepper(&brazoStepper, -14000, brazoSpeed);
+  } else if (datoSerie == '6') {
+    brazoStepper.stop();
+    brazoStepper.disableOutputs();
   } else if (datoSerie == '7') {
-    mueveStepper(&antebrazoStepper, antebrazoStepper.targetPosition() + -600, brazoSpeed);
+    mueveStepper(&antebrazoStepper, antebrazoStepper.targetPosition() - 600, brazoSpeed);
   } else if (datoSerie == '8') {
     mueveStepper(&antebrazoStepper, antebrazoStepper.targetPosition() + 600, brazoSpeed);
+  } else if (datoSerie == 'n') {
+    mueveStepper(&antebrazoStepper, -14000, brazoSpeed);
+  } else if (datoSerie == 'm') {
+    mueveStepper(&antebrazoStepper, 14000, brazoSpeed);
+  } else if (datoSerie == '9') {
+    antebrazoStepper.stop();
+    antebrazoStepper.disableOutputs();
   } else if (datoSerie == '0') {
     brazoStepper.disableOutputs();
     antebrazoStepper.disableOutputs();

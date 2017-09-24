@@ -39,17 +39,17 @@ void setup() {
 
   brazoStepper.setEnablePin(38);
   brazoStepper.setPinsInverted(false, false, true);
-  brazoStepper.setMaxSpeed(1000);
+  brazoStepper.setMaxSpeed(brazoSpeed);
   brazoStepper.disableOutputs();
 
   antebrazoStepper.setEnablePin(62);
   antebrazoStepper.setPinsInverted(false, false, true);
-  antebrazoStepper.setMaxSpeed(1000);
+  antebrazoStepper.setMaxSpeed(brazoSpeed);
   antebrazoStepper.disableOutputs();
 
   baseStepper.setEnablePin(56);
   baseStepper.setPinsInverted(false, false, true);
-  baseStepper.setMaxSpeed(1000);
+  baseStepper.setMaxSpeed(brazoSpeed);
   baseStepper.disableOutputs();
 
   steppers.addStepper(brazoStepper);
@@ -74,12 +74,13 @@ void loop() {
   }
 
   if (steppers.run() == 0) {
-    if (activado) {
-      Serial.println("Se desactivan drivers");
-      activado = false;
-      status();
-    }
+    //    Serial.println(millis());
     if (!nextPosition()) {
+      if (activado) {
+        activado = false;
+        status();
+        Serial.println("Se desactivan drivers");
+      }
       brazoStepper.disableOutputs();
       antebrazoStepper.disableOutputs();
       baseStepper.disableOutputs();
@@ -89,6 +90,9 @@ void loop() {
 }
 
 void mueveStepper(AccelStepper *stepper, int position, int speed) {
+  if (position == stepper->currentPosition()) {
+    return;
+  }
   Serial.print("Iniciamos movimiento ");
   if (stepper == &baseStepper) {
     Serial.print("base ");
@@ -161,7 +165,11 @@ void procesaComando(char datoSerie) {
   } else if (datoSerie == 't') {
     muestraPosiciones();
   } else if (datoSerie == 'i') {
-    goToPosition(0);
+    if (currentPosition < 0) {
+      goToPosition(0);
+    } else {
+      currentPosition = -1;
+    }
   }
 }
 

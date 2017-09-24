@@ -67,8 +67,8 @@ bool nextPosition()
   }
   currentPosition++;
   if (currentPosition == nPositions) {
-    currentPosition = -1;
-    return false;
+    currentPosition = 0;
+//    return false;
   }
 
   Serial.print("Siguiente posición ");
